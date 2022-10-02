@@ -1,7 +1,8 @@
-import { createRouter, createWebHistory, createWebHashHistory } from 'vue-router'
-import main from '../layout/main-layout.vue'
-import AuthCallback from '../components/user/user-interact/user-callback.vue'
-import UI from '../components/user/user-profile/user-ui.vue'
+import { createRouter, createWebHistory, createWebHashHistory } from 'vue-router';
+import main from '../layout/main-layout.vue';
+import AuthCallback from '../components/user/user-interact/user-callback.ts';
+import UserInit from '../components/user/user-profile/user-profile-init.vue';
+import AuthFailed from '../components/user/user-interact/user-auth-failed.vue';
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -18,8 +19,13 @@ const router = createRouter({
     },
     {
       path: '/id/:usedId',
-      name: 'UI',
-      component: UI
+      name: 'UserInit',
+      component: UserInit
+    },
+    {
+      path: '/auth-failed',
+      name: 'AuthFailed',
+      component: AuthFailed
     }
   ]
 })

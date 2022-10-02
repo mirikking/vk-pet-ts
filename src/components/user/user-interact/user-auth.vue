@@ -14,7 +14,7 @@
 import anime from 'animejs';
 
 export default {
-    name: 'UserAuth',
+    name: 'UserAuth', 
     data() {
         return {
 
@@ -22,7 +22,7 @@ export default {
     },
     methods: {
         doLogin() {
-            location.assign('https://oauth.vk.com/authorize?client_id=51433331&display=page&redirect_uri=http://127.0.0.1:5173/callback&scope=friends,notify,friends,photos,audio,video,stories,pages,status,notes,wall,offline,docs,groups,notifications,stats&response_type=token&v=5.131&revoke=-1')
+            location.assign('https://oauth.vk.com/authorize?client_id=51433331&display=page&redirect_uri=http://localhost:5173/callback&scope=friends,notify,friends,photos,audio,video,stories,pages,status,notes,wall,offline,docs,groups,notifications,stats&response_type=token&v=5.131&revoke=-1')
         },
     },
     mounted() {
