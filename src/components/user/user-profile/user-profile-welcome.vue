@@ -21,7 +21,7 @@ export default {
         anime({
             targets: ".welcome_text_show",
             opacity: [
-                {value: 1, duration: 2000, easing: "linear"},
+                {value: 1, duration: 3000, easing: "linear"},
                 {value: 0, duration: 1000, easing: "linear"},
             ],
             complete: (anim:any) =>  {

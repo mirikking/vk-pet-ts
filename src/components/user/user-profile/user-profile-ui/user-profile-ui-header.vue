@@ -16,7 +16,10 @@
             </div>
             <div class="profile_contact">
                 <div class="profile_msg">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="white" xmlns="http://www.w3.org/2000/svg"><path d="M17 9H7V7H17V9Z" fill="currentColor" /><path d="M7 13H17V11H7V13Z" fill="currentColor" /><path fill-rule="evenodd" clip-rule="evenodd" d="M2 18V2H22V18H16V22H14C11.7909 22 10 20.2091 10 18H2ZM12 16V18C12 19.1046 12.8954 20 14 20V16H20V4H4V16H12Z" fill="currentColor" /></svg>
+                    <svg @click="showMsgModal" width="20" height="20" viewBox="-5.5 -5 36 36" fill="white" xmlns="http://www.w3.org/2000/svg"><path d="M17 9H7V7H17V9Z" fill="currentColor" /><path d="M7 13H17V11H7V13Z" fill="currentColor" /><path fill-rule="evenodd" clip-rule="evenodd" d="M2 18V2H22V18H16V22H14C11.7909 22 10 20.2091 10 18H2ZM12 16V18C12 19.1046 12.8954 20 14 20V16H20V4H4V16H12Z" fill="currentColor" /></svg>
+                    <div v-if="this.msgModal == 'shown'" class="profile_msg_modal modal_arrow_right">
+                        <h1>К сожалению с данным типом приложения - отправка сообщений ограничена.</h1>
+                    </div>
                 </div>
                 <div class="profile_share">
                     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M18 9C19.6569 9 21 7.65685 21 6C21 4.34315 19.6569 3 18 3C16.3431 3 15 4.34315 15 6C15 6.12549 15.0077 6.24919 15.0227 6.37063L8.08261 9.84066C7.54305 9.32015 6.80891 9 6 9C4.34315 9 3 10.3431 3 12C3 13.6569 4.34315 15 6 15C6.80891 15 7.54305 14.6798 8.08261 14.1593L15.0227 17.6294C15.0077 17.7508 15 17.8745 15 18C15 19.6569 16.3431 21 18 21C19.6569 21 21 19.6569 21 18C21 16.3431 19.6569 15 18 15C17.1911 15 16.457 15.3202 15.9174 15.8407L8.97733 12.3706C8.99229 12.2492 9 12.1255 9 12C9 11.8745 8.99229 11.7508 8.97733 11.6294L15.9174 8.15934C16.457 8.67985 17.1911 9 18 9Z" fill="currentColor" /></svg>
@@ -36,6 +39,11 @@ export default {
             required: true
         }
     },
+    data() {
+        return {
+            msgModal: 'hidden'
+        }
+    },
     mounted() {
         anime( {
             targets: ".user_ui_header",
@@ -44,6 +52,28 @@ export default {
             ]
         })
 
+    },
+    methods: {
+        showMsgModal() {
+            if (this.msgModal == 'hidden') {
+                this.msgModal = 'shown';
+                this.msgModalState(this.msgModal)
+            } else {
+                this.msgModal = 'hidden';
+            }
+            return;
+        },
+        msgModalState(modalState:String) {
+            if (modalState =='shown') {
+                setTimeout(() => {
+                    window.addEventListener('click', (event) => {
+                         if ((((event.target as Element).parentElement?.classList.contains('profile_msg')) || ((event.target as Element).parentElement?.classList.contains('profile_msg_modal'))) == false) {
+                            this.showMsgModal()
+                         }
+                    })
+                }, 100)
+            }
+        }
     }
 } 
 </script>
@@ -113,9 +143,19 @@ export default {
         display: flex;
         justify-content: center;
         align-items: center;
+        transition: all 0.5s;
+        cursor: pointer;
+    }
+
+    .profile_msg:hover {
         -webkit-box-shadow: 0px 0px 18px 1px rgba(255, 255, 255, 0.2);
         -moz-box-shadow: 0px 0px 18px 1px rgba(255, 255, 255, 0.2);
         box-shadow: 0px 0px 18px 1px rgba(255, 255, 255, 0.2);
+    }
+
+    .profile_msg svg {
+        width: 32px;
+        height: 32px;
     }
 
     .profile_share {
@@ -126,9 +166,46 @@ export default {
         display: flex;
         justify-content: center;
         align-items: center;
+        transition: all 0.5s;
+        cursor: pointer;
+    }
+
+    .profile_share:hover{
         -webkit-box-shadow: 0px 0px 18px 1px rgba(255, 255, 255, 0.2);
         -moz-box-shadow: 0px 0px 18px 1px rgba(255, 255, 255, 0.2);
         box-shadow: 0px 0px 18px 1px rgba(255, 255, 255, 0.2);
+    }
+
+    .profile_msg_modal {
+        display: flex;
+        flex-wrap: wrap;
+        position: absolute;
+        top: 20px;
+        right: 112px;
+        width: 200px;
+        font-size: small;
+        background-color: #383838;
+        box-sizing: border-box;
+        padding: 12px;
+        border-radius: 8px;
+        user-select: none;
+        cursor: default;
+    }
+
+    .profile_msg_modal:after {
+        content: '';
+        position: absolute;
+        width: 0;
+        height: 0;
+        border: solid transparent;
+    }
+
+    .modal_arrow_right:after {
+        border-left-color: #383838;
+        border-width: 15px;
+        left: 100%;
+        top: 30%;
+        margin-top: -15px;
     }
 
 </style>
