@@ -18,7 +18,7 @@ export default {
                 name: 'AuthFailed',
             })
         }
-        if (useUserStore().userAccess.accessToken !== null) {
+        if (exUserId) {
             useRouter().push({
                 name: 'UserInit',
                 params: { usedId: String(exUserId![1]) },

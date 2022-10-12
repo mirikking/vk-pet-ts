@@ -8,6 +8,7 @@
         <ProfileHeader
         v-if="this.isWelcomeShowed"
         :userInfo="this.userInfo"
+        :accessToken="this.accessToken"
         ></ProfileHeader>
     </main>
 </template>

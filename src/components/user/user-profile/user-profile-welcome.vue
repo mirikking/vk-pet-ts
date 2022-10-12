@@ -2,7 +2,7 @@
     <div class="welcome_notify">
         <div class="welcome_text_show">
             <img class="welcome_avatar" :src="this.userInfo.photo_100" alt="">
-            <h1>Здравствуйте {{ this.userInfo.first_name }}</h1>
+            <h1>Здравствуйте, {{ this.userInfo.first_name }}</h1>
         </div>
     </div>
 </template>
@@ -21,7 +21,7 @@ export default {
         anime({
             targets: ".welcome_text_show",
             opacity: [
-                {value: 1, duration: 3000, easing: "linear"},
+                {value: 1, duration: 2000, easing: "linear"},
                 {value: 0, duration: 1000, easing: "linear"},
             ],
             complete: (anim:any) =>  {
