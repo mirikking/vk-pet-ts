@@ -17,5 +17,4 @@ export default {
     font-family: 'Montserrat', sans-serif;
 }
 
-
 </style>

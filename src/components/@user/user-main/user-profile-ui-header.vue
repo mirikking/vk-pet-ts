@@ -1,31 +1,52 @@
 <template>
     <header class="user_ui_header">
-        <div class="profile_info">
+        <div class="profile_info" v-if="this.userInfo.id">
             <div class="profile_story">
                 <img class="profile_avatar" :src="this.userInfo.photo_200_orig" alt="profile avatar">
             </div>
             <div class="profile_about">
                 <div class="profile_full_name">
-                    <h1>{{ this.userInfo.first_name }}</h1>
-                    <h1>{{ this.userInfo.last_name }}</h1>
+                    <h1 class="profile_first_name">{{ this.userInfo.first_name }}</h1>
+                    <h1 class="profile_last_name">{{ this.userInfo.last_name }}</h1>
+                    <span class="profile_status_content">
+                        <p class="profile_status_text">{{ this.userInfo.status }}</p>
+                    </span>
                 </div>
-                <div class="profile_full_about">
-                    <h2 class="profile_about_text" v-if="this.userInfo.about"> {{ this.userInfo.about }} </h2>
-                    <h2 class="profile_about_text" v-else>No BIO info.😩</h2>
+                <div class="profile_counters">
+                    <div class="profile_friends">
+                        <PhUsers></PhUsers>
+                        <h1>Друзей: {{ this.userInfo.counters.friends }}</h1>
+                    </div>
+                    <div class="profile_followers">
+                        <Followed></Followed>
+                        <h1>Подписчиков: {{ this.userInfo.counters.clips_followers }}</h1>
+                    </div>
+                </div>
+                <div class="profile_additional_info">
+                    <h1 class="profile_city">
+                        <MdiHomeVariant />
+                        {{ this.userInfo.city.title }}
+                    </h1>
+                    <h1 class="profile_study">
+                        <IcTwotoneMenuBook></IcTwotoneMenuBook>
+                        {{ this.userInfo.university_name }}
+                    </h1>
                 </div>
             </div>
             <div class="profile_contact">
                 <div @click="showMsgModal" class="profile_msg">
-                    <svg width="20" height="20" viewBox="-5.5 -5 36 36" fill="white" xmlns="http://www.w3.org/2000/svg"><path d="M17 9H7V7H17V9Z" fill="currentColor" /><path d="M7 13H17V11H7V13Z" fill="currentColor" /><path fill-rule="evenodd" clip-rule="evenodd" d="M2 18V2H22V18H16V22H14C11.7909 22 10 20.2091 10 18H2ZM12 16V18C12 19.1046 12.8954 20 14 20V16H20V4H4V16H12Z" fill="currentColor" /></svg>
+                    <p class="profile_contact_additional">Настройки</p>
+                    <PhGear></PhGear>
                     <div v-if="this.msgModal == 'shown'" class="profile_msg_modal modal_arrow_right">
-                        <h1>К сожалению с данным типом приложения - отправка сообщений ограничена.</h1>
+                        <h1>К сожалению с данным типом приложения - настройка ограничена.</h1>
                     </div>
                 </div>
                 <div @click="showNotifyModal" class="profile_notify">
+                    <p class="profile_contact_additional">Оповещения</p>
                     <div class="count_notification"><h1> {{ this.notificationCount }} </h1></div>
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M14 3V3.28988C16.8915 4.15043 19 6.82898 19 10V17H20V19H4V17H5V10C5 6.82898 7.10851 4.15043 10 3.28988V3C10 1.89543 10.8954 1 12 1C13.1046 1 14 1.89543 14 3ZM7 17H17V10C17 7.23858 14.7614 5 12 5C9.23858 5 7 7.23858 7 10V17ZM14 21V20H10V21C10 22.1046 10.8954 23 12 23C13.1046 23 14 22.1046 14 21Z" fill="currentColor" /></svg>
+                    <LucideBell></LucideBell>
                     <div v-if="this.notifyModal == 'shown'" class="profile_notify_modal modal_arrow_right">
-                        <h1>К сожалению с данным типом приложения - отправка сообщений ограничена.</h1>
+                        <h1>...</h1>
                     </div>
                 </div>
             </div>
@@ -65,7 +86,7 @@ export default {
                 'content-type': 'application/x-www-form-urlencoded',
             }
         }).then((response) => {
-            console.log(response.data.response.count)
+            this.notificationCount = response.data.response.count
         })
     },
     mounted() {
@@ -144,6 +165,7 @@ export default {
     }
 
     .profile_about_text {
+        font-size: 16px;
         opacity: .7;
     }
 
@@ -151,38 +173,32 @@ export default {
         margin-left: auto;
         display: flex;
         flex-direction: column;
-        align-items: center;
-        gap: 40px;
+        align-items: flex-end;
+        gap: 20px;
     }
 
     .profile_msg {
-        width: 48px;
+        width: auto;
         height: 48px;
         border-radius: 100%;
-        background-color: #383838;
+        background-color: transparent;
         display: flex;
         justify-content: center;
         align-items: center;
         transition: all 0.5s;
         cursor: pointer;
-    }
-
-    .profile_msg:hover {
-        -webkit-box-shadow: 0px 0px 18px 1px rgba(255, 255, 255, 0.2);
-        -moz-box-shadow: 0px 0px 18px 1px rgba(255, 255, 255, 0.2);
-        box-shadow: 0px 0px 18px 1px rgba(255, 255, 255, 0.2);
     }
 
     .profile_msg svg {
-        width: 32px;
-        height: 32px;
+        width: 22px;
+        height: 22px;
     }
 
     .profile_notify {
-        width: 48px;
+        width: auto;
         height: 48px;
         border-radius: 100%;
-        background-color: #383838;
+        background-color: transparent;
         display: flex;
         justify-content: center;
         align-items: center;
@@ -190,27 +206,24 @@ export default {
         cursor: pointer;
     }
 
-    .profile_notify:hover{
-        -webkit-box-shadow: 0px 0px 18px 1px rgba(255, 255, 255, 0.2);
-        -moz-box-shadow: 0px 0px 18px 1px rgba(255, 255, 255, 0.2);
-        box-shadow: 0px 0px 18px 1px rgba(255, 255, 255, 0.2);
-    }
-
     .count_notification {
-        font-size: 15px;
+        font-size: 10px;
         display: flex;
         align-items: center;
         justify-content: center;
         color: #383838;
         position: absolute;
-        background-color: #fff;
+        background-color: rgb(0, 119, 255);
         width: 18px;
         height: 18px;
         border-radius: 100%;
-        right: 35px;
-        top: 125px;
+        right: 32px;
+        top: 110px;
         user-select: none;
-        opacity: 0;
+        box-sizing: border-box;
+        padding: 2px;
+        border: #242424 2px solid;
+        color: white;
     }
 
     .profile_msg_modal {
@@ -218,7 +231,7 @@ export default {
         flex-wrap: wrap;
         position: absolute;
         top: 20px;
-        right: 112px;
+        right: 170px;
         width: 200px;
         font-size: small;
         background-color: #383838;
@@ -229,7 +242,8 @@ export default {
         cursor: default;
     }
 
-    .profile_msg_modal:after {
+    .profile_msg_modal:after,
+    .profile_notify_modal::after {
         content: '';
         position: absolute;
         width: 0;
@@ -243,6 +257,71 @@ export default {
         left: 100%;
         top: 40%;
         margin-top: -15px;
+    }
+
+    .profile_notify_modal {
+        display: flex;
+        flex-wrap: wrap;
+        position: absolute;
+        top: 90px;
+        right: 170px;
+        width: 200px;
+        font-size: small;
+        background-color: #383838;
+        box-sizing: border-box;
+        padding: 12px;
+        border-radius: 8px;
+        user-select: none;
+        cursor: default;
+    }
+
+    .profile_contact_additional {
+        font-size: 12px;
+    }
+
+    .profile_additional_info {
+        display: flex;
+        flex-direction: row;
+        gap: 24px;
+    }
+
+    .profile_city,
+    .profile_study {
+        display: flex;
+        flex-direction: row;
+        gap: 5px;
+        opacity: .7;
+        font-size: 13px;
+        align-items: center;
+        user-select: none;
+    }
+
+    .profile_friends,
+    .profile_followers {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        gap: 6px;
+    }
+
+    .profile_counters {
+        display: flex;
+        flex-direction: row;
+        font-size: 16px;
+        gap: 12px;
+    }
+
+    .profile_status_content {
+        width: auto;
+        height: 100%;
+        background-color: #1b1b1b;
+        padding: 6px;
+        border-radius: 12px;
+    }
+
+    .profile_status_text {
+        font-size: 12px;
+        user-select: none;
     }
 
 </style>

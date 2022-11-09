@@ -1,21 +1,22 @@
 <template>
     <main>
         <Welcome 
-        v-if="!this.isWelcomeShowed"
-        :userInfo="this.userInfo"
-        @welcomeShown="destroyWelcome"
+            v-if="!this.welcomeShowed"
+            :userInfo="this.userInfo"
+            @welcomeMsg="welcomeMsg"
         ></Welcome>
         <ProfileHeader
-        v-if="this.isWelcomeShowed"
-        :userInfo="this.userInfo"
-        :accessToken="this.accessToken"
+            v-if="this.welcomeShowed"
+            :userInfo="this.userInfo"
+            :accessToken="this.accessToken"
         ></ProfileHeader>
     </main>
 </template>
 <script lang="ts">
 import axios from 'axios';
 import { useRouter } from 'vue-router';
-import { useUserStore } from '../../../stores/userState.ts';
+import { useUserStore } from '../../../stores/userState';
+import { useAnimationState } from '../../../stores/animationState';
 
 export default {
     name: 'UserInit',
@@ -26,18 +27,18 @@ export default {
             isAuthorized: useUserStore().userAccess.isAuthorized,
             userInfo: {
                 type: Object,
-                default: {}
+                default: {}  
             },
-            isWelcomeShowed: false
+            welcomeShowed: useAnimationState().animationState.welcomeShowed
         }
     },
-    created() {
+    mounted() {
         const router = useRouter();
         axios({
             method: "post",
             url: "https://api.vk.com/method/users.get",
             withCredentials: true,
-            data: `user_ids=${this.userId}&fields=photo_100,photo_200_orig,stories,about,activities,bdate,career,city,connections,contacts,counters,country,domain,education,followers_count,interests,occupation,photo_max_orig,status,universities,relation&access_token=${this.accessToken}&v=5.131`,
+            data: `user_ids=${this.userId}&fields=photo_100,photo_200_orig,stories,about,activities,bdate,career,city,connections,contacts,counters,country,domain,education,interests,occupation,photo_max_orig,status,universities,relation,counters,&access_token=${this.accessToken}&v=5.131`,
             headers: {
                 'content-type': 'application/x-www-form-urlencoded',
             }
@@ -52,8 +53,10 @@ export default {
         })
     },
     methods: {
-        destroyWelcome(isAnimationCompleted:Boolean) {
-            this.isWelcomeShowed = isAnimationCompleted;
+        welcomeMsg(isAnimationCompleted:string) {
+            this.welcomeShowed = isAnimationCompleted;
+            useAnimationState().animationState.welcomeShowed = isAnimationCompleted;
+            sessionStorage.setItem('animationState', JSON.stringify(useAnimationState().animationState))
         }
     }
 }

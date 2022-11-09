@@ -7,7 +7,7 @@
     </div>
 </template>
 <script lang="ts">
-import anime from "animejs";
+import anime from 'animejs'
 
 export default {
     name: 'Welcome',
@@ -24,9 +24,9 @@ export default {
                 {value: 1, duration: 2000, easing: "linear"},
                 {value: 0, duration: 1000, easing: "linear"},
             ],
-            complete: (anim:any) =>  {
+            complete: (anim: any) =>  {
                 if (anim.finished) {
-                    this.$emit('welcomeShown', true)
+                    this.$emit('welcomeMsg', true)
                 }
             }
         })

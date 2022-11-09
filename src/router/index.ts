@@ -1,8 +1,8 @@
-import { createRouter, createWebHistory, createWebHashHistory } from 'vue-router';
+import { createRouter, createWebHistory, createWebHashHistory, routerKey } from 'vue-router';
+import { useUserStore } from '../stores/userState'
 import main from '../layout/main-layout.vue';
-import AuthCallback from '../components/user/user-interact/user-callback.ts';
-import UserInit from '../components/user/user-profile/user-profile-init.vue';
-import AuthFailed from '../components/user/user-interact/user-auth-failed.vue';
+import UserInit from '../components/@user/user-init/user-profile-init.vue';
+import AuthFailed from '../components/@user/user-interact/user-auth-failed.vue';
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -15,12 +15,38 @@ const router = createRouter({
     {
       path: '/callback/:',
       name: 'AuthCallback',
-      component: AuthCallback
+      redirect: (route) => {
+        const tokenParseRegex: RegExp = /access_token=(.*?)&/;
+        const idParseRegex: RegExp = /user_id=(.*?)$/;
+        const exAccessToken: RegExpMatchArray | null = route.hash.match(tokenParseRegex);
+        const exUserId: RegExpMatchArray | null = route.hash.match(idParseRegex);
+        route.hash = "";
+        if (exAccessToken !== null) {
+          useUserStore().userAccess.accessToken = exAccessToken![1];
+          useUserStore().userAccess.userId = exUserId![1];
+          useUserStore().userAccess.isAuthorized = true;
+          localStorage.setItem('userAccess', JSON.stringify(useUserStore().userAccess))
+        } else {
+          return {
+              name: 'AuthFailed',
+            }
+        }
+        if (exUserId) {
+          return {
+            name: 'UserInit',
+            params: { usedId: String(exUserId![1])}
+          }
+        } else {
+          return {
+              name: 'AuthFailed',
+            }
+        }
+      }
     },
     {
       path: '/id/:usedId',
       name: 'UserInit',
-      component: UserInit
+      component: UserInit,
     },
     {
       path: '/auth-failed',
