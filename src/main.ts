@@ -6,7 +6,6 @@ import anime from "animejs";
 
 import components from './components/components.lib';
 import icons from './assets/icons.lib'; 
-import './tl_init.css';
 
 const app = createApp(App);
 const pinia = createPinia();

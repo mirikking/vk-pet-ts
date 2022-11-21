@@ -22,10 +22,11 @@ const router = createRouter({
         const exUserId: RegExpMatchArray | null = route.hash.match(idParseRegex);
         route.hash = "";
         if (exAccessToken !== null) {
-          useUserStore().userAccess.accessToken = exAccessToken![1];
-          useUserStore().userAccess.userId = exUserId![1];
-          useUserStore().userAccess.isAuthorized = true;
-          localStorage.setItem('userAccess', JSON.stringify(useUserStore().userAccess))
+          useUserStore().setUserData({
+            accessToken: exAccessToken![1],
+            userId:exUserId![1],
+            isAuthorized: true
+          })
         } else {
           return {
               name: 'AuthFailed',

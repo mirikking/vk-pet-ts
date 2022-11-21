@@ -1,14 +1,14 @@
 <template>
-    <main>
+    <main class="app_tieser">
         <Welcome 
-            v-if="!this.welcomeShowed"
-            :userInfo="this.userInfo"
+            v-if="!welcomeShowed"
+            :userInfo="userInfo"
             @welcomeMsg="welcomeMsg"
         ></Welcome>
         <ProfileHeader
-            v-if="this.welcomeShowed"
-            :userInfo="this.userInfo"
-            :accessToken="this.accessToken"
+            v-if="welcomeShowed"
+            :userInfo="userInfo"
+            :accessToken="accessToken"
         ></ProfileHeader>
     </main>
 </template>
@@ -22,14 +22,14 @@ export default {
     name: 'UserInit',
     data()  {
         return {
-            accessToken: useUserStore().userAccess.accessToken,
-            userId: useUserStore().userAccess.userId,
-            isAuthorized: useUserStore().userAccess.isAuthorized,
+            accessToken: useUserStore().accessToken,
+            userId: useUserStore().userId,
+            isAuthorized: useUserStore().isAuthorized,
             userInfo: {
                 type: Object,
                 default: {}  
             },
-            welcomeShowed: useAnimationState().animationState.welcomeShowed
+            welcomeShowed: useAnimationState().welcomeShowed
         }
     },
     mounted() {
@@ -51,19 +51,17 @@ export default {
                 this.userInfo = response.data.response[0];
             }
         })
-    },
+    }, 
     methods: {
-        welcomeMsg(isAnimationCompleted:string) {
-            this.welcomeShowed = isAnimationCompleted;
-            useAnimationState().animationState.welcomeShowed = isAnimationCompleted;
-            sessionStorage.setItem('animationState', JSON.stringify(useAnimationState().animationState))
+        welcomeMsg(isAnimationCompleted:boolean) {
+            useAnimationState().setWelcomeState(isAnimationCompleted)
         }
     }
 }
 </script>
 <style scoped>
 
-main {
+.app_tieser {
     width: 100%;
     height: 100vh;
 }

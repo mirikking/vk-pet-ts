@@ -71,6 +71,7 @@ export default {
         justify-content: space-between;
         border: none;
         transition: all 0.4s;
+        cursor: pointer;
     }
 
     .login-btn:hover {

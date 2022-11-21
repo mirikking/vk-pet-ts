@@ -1,35 +1,35 @@
 <template>
     <header class="user_ui_header">
-        <div class="profile_info" v-if="this.userInfo.id">
+        <div class="profile_info" v-if="userInfo.id">
             <div class="profile_story">
-                <img class="profile_avatar" :src="this.userInfo.photo_200_orig" alt="profile avatar">
+                <img class="profile_avatar" :src="userInfo.photo_200_orig" alt="profile avatar">
             </div>
             <div class="profile_about">
                 <div class="profile_full_name">
-                    <h1 class="profile_first_name">{{ this.userInfo.first_name }}</h1>
-                    <h1 class="profile_last_name">{{ this.userInfo.last_name }}</h1>
+                    <h1 class="profile_first_name">{{ userInfo.first_name }}</h1>
+                    <h1 class="profile_last_name">{{ userInfo.last_name }}</h1>
                     <span class="profile_status_content">
-                        <p class="profile_status_text">{{ this.userInfo.status }}</p>
+                        <p class="profile_status_text">{{ userInfo.status }}</p>
                     </span>
                 </div>
                 <div class="profile_counters">
                     <div class="profile_friends">
                         <PhUsers></PhUsers>
-                        <h1>Друзей: {{ this.userInfo.counters.friends }}</h1>
+                        <h1>Друзей: {{ userInfo.counters.friends }}</h1>
                     </div>
                     <div class="profile_followers">
                         <Followed></Followed>
-                        <h1>Подписчиков: {{ this.userInfo.counters.clips_followers }}</h1>
+                        <h1>Подписчиков: {{ userInfo.counters.clips_followers }}</h1>
                     </div>
                 </div>
                 <div class="profile_additional_info">
                     <h1 class="profile_city">
                         <MdiHomeVariant />
-                        {{ this.userInfo.city.title }}
+                        {{ userInfo.city.title }}
                     </h1>
                     <h1 class="profile_study">
                         <IcTwotoneMenuBook></IcTwotoneMenuBook>
-                        {{ this.userInfo.university_name }}
+                        {{ userInfo.university_name }}
                     </h1>
                 </div>
             </div>
@@ -37,15 +37,15 @@
                 <div @click="showMsgModal" class="profile_msg">
                     <p class="profile_contact_additional">Настройки</p>
                     <PhGear></PhGear>
-                    <div v-if="this.msgModal == 'shown'" class="profile_msg_modal modal_arrow_right">
+                    <div v-if="msgModal == 'shown'" class="profile_msg_modal modal_arrow_right">
                         <h1>К сожалению с данным типом приложения - настройка ограничена.</h1>
                     </div>
                 </div>
                 <div @click="showNotifyModal" class="profile_notify">
                     <p class="profile_contact_additional">Оповещения</p>
-                    <div class="count_notification"><h1> {{ this.notificationCount }} </h1></div>
+                    <div class="count_notification"><h1> {{ notificationCount }} </h1></div>
                     <LucideBell></LucideBell>
-                    <div v-if="this.notifyModal == 'shown'" class="profile_notify_modal modal_arrow_right">
+                    <div v-if="notifyModal == 'shown'" class="profile_notify_modal modal_arrow_right">
                         <h1>...</h1>
                     </div>
                 </div>
@@ -140,7 +140,7 @@ export default {
         border-radius: 50%;
         width: 132px;
         height: 132px;
-    }
+    } 
 
     .profile_full_name {
         display: flex;
@@ -207,7 +207,7 @@ export default {
     }
 
     .count_notification {
-        font-size: 10px;
+        font-size: 5px;
         display: flex;
         align-items: center;
         justify-content: center;
@@ -307,13 +307,13 @@ export default {
     .profile_counters {
         display: flex;
         flex-direction: row;
-        font-size: 16px;
+        font-size: 10px;
         gap: 12px;
     }
 
     .profile_status_content {
         width: auto;
-        height: 100%;
+        height: 1rem;
         background-color: #1b1b1b;
         padding: 6px;
         border-radius: 12px;

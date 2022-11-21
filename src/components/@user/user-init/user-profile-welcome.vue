@@ -1,8 +1,8 @@
 <template>
     <div class="welcome_notify">
         <div class="welcome_text_show">
-            <img class="welcome_avatar" :src="this.userInfo.photo_100" alt="">
-            <h1>Здравствуйте, {{ this.userInfo.first_name }}</h1>
+            <img class="welcome_avatar" :src="userInfo.photo_100" alt="">
+            <h1>Здравствуйте, {{ userInfo.first_name }}</h1>
         </div>
     </div>
 </template>
