@@ -4,9 +4,10 @@ Vk application based on VK OPEN API, design takes part of community vision of VK
 
 ## liberaries
 
-#### State: pinia
-#### Animation: animejs
+#### State: Pinia
+#### Animation: Animejs
 #### Additionally: Axios
+#### UI Icons: icones.js.org
 
 ## Authorization
 
