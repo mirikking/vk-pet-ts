@@ -8,7 +8,7 @@
                 <div class="profile_full_name">
                     <h1 class="profile_first_name">{{ userInfo.first_name }}</h1>
                     <h1 class="profile_last_name">{{ userInfo.last_name }}</h1>
-                    <span class="profile_status_content">
+                    <span class="profile_status_content" v-if="userInfo.status != 'undefined'">
                         <p class="profile_status_text">{{ userInfo.status }}</p>
                     </span>
                 </div>

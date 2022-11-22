@@ -2,7 +2,7 @@ import { createRouter, createWebHistory, createWebHashHistory, routerKey } from 
 import { useUserStore } from '../stores/userState'
 import main from '../layout/main-layout.vue';
 import UserInit from '../components/@user/user-init/user-profile-init.vue';
-import AuthFailed from '../components/@user/user-interact/user-auth-failed.vue';
+import AuthFailed from '../components/@auth/user-auth-failed.vue';
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),

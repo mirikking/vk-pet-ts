@@ -3,12 +3,9 @@
 </template>
 
 <script lang="ts">
-import UserAuth from "../components/@user/user-interact/user-auth.vue";
+import UserAuth from "../components/@auth/user-auth.vue";
 
 export default {
-    data() {
-        return {};
-    },
     components: { UserAuth }
 }
 </script>
