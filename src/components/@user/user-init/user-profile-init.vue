@@ -34,6 +34,7 @@ export default {
     }, 
     methods: {
         welcomeMsg(isAnimationCompleted:boolean) {
+            this.welcomeShowed = isAnimationCompleted
             useAnimationState().setWelcomeState(isAnimationCompleted)
         },
         mountUser(id: string | string[]) {
