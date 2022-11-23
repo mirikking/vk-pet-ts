@@ -81,7 +81,7 @@ export default {
             method: "post",
             url: "https://api.vk.com/method/notifications.get",
             withCredentials: true,
-            data: `count=1&access_token=${this.accessToken}&v=5.131`,
+            data: `count=10&access_token=${this.accessToken}&v=5.131`,
             headers: {
                 'content-type': 'application/x-www-form-urlencoded',
             }
